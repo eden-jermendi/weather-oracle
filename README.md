@@ -1,29 +1,27 @@
-# Boilerplate: React with Express and Vite
+Whimsical Weather
+Whimsical Weather is a fun web app that turns ordinary weather forecasts into playful, imaginative descriptions.
+Users can enter a city and receive a whimsical story-like response describing the weather, rather than a typical forecast.
 
-This is a starter project that uses Vite to bundle a React app and Express to serve it in production. Express is used in development to serve an API server.
 
-Vite React App: [http://localhost:5173](http://localhost:5173)
-Express API Server: [http://localhost:3000](http://localhost:3000)
+Idea
+Weather reports are usually factual and straightforward. This project explores how AI can make weather information more engaging and creative by transforming data into short, whimsical descriptions.
 
-Requests to `http://localhost:5173/api` are proxied to `http://localhost:3000/api`.
+Instead of:
 
-## Setup
+"It is 20°C and partly cloudy."
 
-### Installation
+You might get:
 
-#### **From the Github UI**
+“The clouds are lazily drifting across the sky today, letting the sun peek through like a mischievous child playing hide and seek. A gentle warmth lingers in the air, inviting the city outside.”
 
-See the instructions [here](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) to use Github's feature to create a new repo from a template.
 
-```
-git clone [your-project-ssh-address]
-cd [your-project-name]
-npm install # to install dependencies
-npm run dev # to start the dev server
-```
+How It Works
+User enters a city name
 
-You can find the server running on [http://localhost:3000](http://localhost:3000) and the client running on [http://localhost:5173](http://localhost:5173).
+The app fetches weather data from an external API
 
----
+Weather information is sent to an AI prompt
 
-[Provide feedback on this repo](https://docs.google.com/forms/d/e/1FAIpQLSfw4FGdWkLwMLlUaNQ8FtP2CTJdGDUv6Xoxrh19zIrJSkvT4Q/viewform?usp=pp_url&entry.1958421517=boilerplate-react-api)
+AI generates a whimsical weather description
+
+The response is displayed to the user
