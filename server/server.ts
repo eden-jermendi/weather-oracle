@@ -1,15 +1,11 @@
 import * as Path from 'node:path'
 import express from 'express'
 import cors, { CorsOptions } from 'cors'
+import 'dotenv/config'
+import oracleRoutes from "./routes/oracleroute"
 
 const server = express()
-
-server.get('/api/v1/greeting', (req, res) => {
-  const greetings = ['hola', 'hi', 'hello', 'howdy']
-  const index = Math.floor(Math.random() * greetings.length)
-  console.log(index)
-  res.json({ greeting: greetings[index] })
-})
+server.use("/v1", oracleRoutes)
 
 server.use(express.json())
 server.use(cors('*' as CorsOptions))
