@@ -1,6 +1,16 @@
+
 import request from 'superagent'
 
-const rootURL = new URL(`/v1`, document.baseURI)
+// Match your backend port
+const ROOT_URL = new URL('/v1', document.baseURI) //to avoid hardcoding locahost
+
+export async function getOracle(city: string) {
+  const res = await request
+    .get(`${ROOT_URL}/oracle`)
+    .query({ city })
+
+  return res.body
+}
 
 // export async function getGreeting() {
 //   const res = await request.get(`${rootURL}/greeting`)

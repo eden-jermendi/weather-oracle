@@ -1,30 +1,62 @@
 import { useState } from 'react'
-import { getGreeting } from '../apiClient.ts'
-import { useQuery } from '@tanstack/react-query'
+import { getOracle } from '../apiClient'
 
-const App = () => {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [city, setCity] = useState('')
+  const [oracle, setOracle] = useState('')
+  const [temp, setTemp] = useState<number | null>(null)
+  const [weather, setWeather] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const {
-    data: greeting,
-    isError,
-    isPending,
-  } = useQuery({ queryKey: ['greeting', count], queryFn: getGreeting })
+  async function handleSearch() {
+    if (!city) return
 
-  if (isPending) return <p>Loading...</p>
+    try {
+      setLoading(true)
+      const data = await getOracle(city)  // calling apiclient fn to get oracle data from backend
+
+      if (data) {
+        setOracle(data.oracle ?? 'The oracle cannot see this city.')
+        setTemp(data.temp ?? null)
+        setWeather(data.weather ?? '')
+      } else {
+        setOracle('The oracle cannot see this city.')
+        setTemp(null)
+        setWeather('')
+      }
+    } catch (error) {
+      console.error(error)
+      setOracle('The oracle is confused by the winds.')
+      setTemp(null)
+      setWeather('')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <>
-      {count}
-      <h1>{greeting}</h1>
-      {isError && (
-        <p style={{ color: 'red' }}>
-          There was an error retrieving the greeting.
-        </p>
+    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+      <h1>🔮 Weather Oracle</h1>
+
+      <input
+        placeholder="Enter a city"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+      />
+
+      <button onClick={handleSearch} style={{ marginLeft: '10px' }}>
+        Ask the Oracle
+      </button>
+
+      {loading && <p>Consulting the skies...</p>}
+
+      {oracle && (
+        <div style={{ marginTop: '20px', fontStyle: 'italic' }}>
+          {temp !== null && <p>🌡 Temperature: {temp}°C</p>}
+          {weather && <p>☁ Weather: {weather}</p>}
+          <p>🔮 {oracle}</p>
+        </div>
       )}
-      <button onClick={() => setCount(count + 1)}>Click</button>
-    </>
+    </div>
   )
 }
-
-export default App

@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { getOracle } from '../controllers/oraclecontroller'
-import express from 'express'
 
 const router = express.Router()
 
