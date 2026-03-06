@@ -2,7 +2,7 @@
 import request from 'superagent'
 
 // Match your backend port
-const ROOT_URL = 'http://localhost:3000/v1'
+const ROOT_URL = new URL('/v1', document.baseURI) //to avoid hardcoding locahost
 
 export async function getOracle(city: string) {
   const res = await request
@@ -10,4 +10,23 @@ export async function getOracle(city: string) {
     .query({ city })
 
   return res.body
+}
+
+// export async function getGreeting() {
+//   const res = await request.get(`${rootURL}/greeting`)
+//   return res.body.greeting as string
+// }
+
+export type WeatherData = {
+  temperature: number
+  windSpeed: number
+  cloudiness: number
+  precipitation: number
+  pictocode: number
+  isDaylight: boolean
+}
+
+export async function getWeather(lat: number, lon: number) {
+  const res = await request.get(`${rootURL}/weather`).query({ lat, lon })
+  return res.body as WeatherData
 }

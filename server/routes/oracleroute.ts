@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { getOracle } from '../controllers/oraclecontroller'
 
-const router = Router()
+const router = express.Router()
 
 router.get('/oracle', getOracle)
 

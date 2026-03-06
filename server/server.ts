@@ -3,8 +3,12 @@ import cors from 'cors'
 import * as Path from 'node:path'
 import 'dotenv/config'
 import oracleRoutes from './routes/oracleroute'
+import weatherRoutes from './routes/weather'
 
 const server = express()
+
+server.use('/v1', oracleRoutes)
+server.use('/v1/weather', weatherRoutes)
 
 // Enable CORS for all origins (frontend on 5173)
 server.use(cors())
