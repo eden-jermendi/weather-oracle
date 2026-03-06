@@ -8,7 +8,7 @@ Write a short, playful, mystical weather message for the user.
 Keep it to 2-4 sentences.
 Do not mention being an AI.
 Do not explain the weather scientifically.
-Make it feel like a fortune or omen, personalised to the user's city's weather.
+Make it feel like a fortune or omen, personalised to the users citys weather.
 
 Weather data:
 - City: ${weather.city}
