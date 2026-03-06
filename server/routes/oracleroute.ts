@@ -1,9 +1,10 @@
-import { Router } from "express"
-import { getOracle } from "../controllers/oraclecontroller"
+import { Router } from 'express'
+import { getOracle } from '../controllers/oraclecontroller'
+import express from 'express'
 
-const router = Router()
+const router = express.Router()
 
-router.get("/oracle", getOracle)
+router.get('/oracle', getOracle)
 
 export default router
 

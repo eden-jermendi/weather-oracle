@@ -2,10 +2,12 @@ import * as Path from 'node:path'
 import express from 'express'
 import cors, { CorsOptions } from 'cors'
 import 'dotenv/config'
-import oracleRoutes from "./routes/oracleroute"
+import oracleRoutes from './routes/oracleroute'
+import weatherRoutes from './routes/weather'
 
 const server = express()
-server.use("/v1", oracleRoutes)
+server.use('/v1', oracleRoutes)
+server.use('/v1/weather', weatherRoutes)
 
 server.use(express.json())
 server.use(cors('*' as CorsOptions))
