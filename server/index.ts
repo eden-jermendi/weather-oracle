@@ -1,8 +1,9 @@
+// index.ts
 import server from './server.ts'
 
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
-server.listen(port, function () {
-  // eslint-disable-next-line no-console
-  console.log('Listening on port', port)
+server.listen(PORT, () => {
+  console.log('API KEY:', process.env.OPENWEATHER_API_KEY)
+  console.log(`Listening on port ${PORT}`)
 })

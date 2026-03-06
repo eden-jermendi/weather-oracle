@@ -1,15 +1,19 @@
-import * as Path from 'node:path'
 import express from 'express'
-import cors, { CorsOptions } from 'cors'
+import cors from 'cors'
+import * as Path from 'node:path'
 import 'dotenv/config'
-import oracleRoutes from "./routes/oracleroute"
+import oracleRoutes from './routes/oracleroute'
 
 const server = express()
-server.use("/v1", oracleRoutes)
 
+// Enable CORS for all origins (frontend on 5173)
+server.use(cors())
 server.use(express.json())
-server.use(cors('*' as CorsOptions))
 
+// Mount API routes
+server.use('/v1', oracleRoutes)
+
+// Serve static files in production
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))
   server.use('/assets', express.static(Path.resolve('./dist/assets')))
