@@ -27,6 +27,6 @@ export type WeatherData = {
 }
 
 export async function getWeather(lat: number, lon: number) {
-  const res = await request.get(`${rootURL}/weather`).query({ lat, lon })
+  const res = await request.get(`${ROOT_URL}/weather`).query({ lat, lon })
   return res.body as WeatherData
 }
