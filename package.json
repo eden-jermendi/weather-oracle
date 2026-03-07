@@ -16,7 +16,9 @@
     "build:server": "esbuild --packages=external --platform=node --format=esm --outfile=dist/server.js --bundle server/index.ts",
     "test": "vitest",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx client server",
-    "format": "prettier -w '**/*.{js,jsx,ts,tsx}'"
+    "format": "prettier -w '**/*.{js,jsx,ts,tsx}'",
+    "render:build": "npm install && npm run build && npm prune --omit=dev",
+"render:start": "node dist/server.js"
   },
   "keywords": [
     "frontend"
