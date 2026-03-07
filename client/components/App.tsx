@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getOracle } from '../apiClient'
+import './style.css'
 
 function getReadableError(error: unknown): string {
   const err = error as { response?: { body?: { error?: string } } }
@@ -58,33 +59,38 @@ export default function App() {
       setHumidity(null)
     } finally {
       setLoading(false)
+      setCity('')
     }
   }
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>🔮 Weather Oracle</h1>
+    <div className="page" style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+      <div className="card">
+        <h1>🔮 Weather Oracle</h1>
 
-      <input
-        placeholder="Enter a city"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-      />
+        <input
+          placeholder="Enter a city"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
 
-      <button onClick={handleSearch} style={{ marginLeft: '10px' }}>
-        Ask the Oracle
-      </button>
+        <button onClick={handleSearch} style={{ marginLeft: '10px' }}>
+          Ask the Oracle
+        </button>
 
-      {loading && <p>Consulting the skies...</p>}
+        {loading && <p>Consulting the skies...</p>}
 
-      {oracle && (
-        <div style={{ marginTop: '20px', fontStyle: 'italic' }}>
-          {temp !== null && <p>🌡 Temperature: {temp.toFixed(1)}°C</p>}
-          {feelsLike !== null && <p>🥶 Feels like: {feelsLike.toFixed(1)}°C</p>}
-          {humidity !== null && <p>💧 Humidity: {humidity}%</p>}
-          <p>🔮 {oracle}</p>
-        </div>
-      )}
+        {oracle && (
+          <div style={{ marginTop: '20px', fontStyle: 'italic' }}>
+            {temp !== null && <p>🌡 Temperature: {temp.toFixed(1)}°C</p>}
+            {feelsLike !== null && (
+              <p>🥶 Feels like: {feelsLike.toFixed(1)}°C</p>
+            )}
+            {humidity !== null && <p>💧 Humidity: {humidity}%</p>}
+            <p>🔮 {oracle}</p>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
