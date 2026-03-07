@@ -6,13 +6,11 @@ import oracleRoutes from './routes/oracleroute'
 
 const server = express()
 
-server.use('/v1', oracleRoutes)
-
 // Enable CORS for all origins (frontend on 5173)
 server.use(cors())
 server.use(express.json())
 
-// Mount API routes
+server.use('/v1', oracleRoutes)
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
