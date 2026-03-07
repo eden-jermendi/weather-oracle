@@ -24,6 +24,10 @@ You get:
 
 ![Screenshot](client/assets/screenshot-of-MVP.png)
 
+### Live deployment on Render
+
+[Click here to see the project live!](https://weather-oracle-c4x2.onrender.com/)
+
 ## MVP Scope
 
 - City text input on frontend
