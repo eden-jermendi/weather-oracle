@@ -20,6 +20,10 @@ You get:
 
 `The clouds drift like slow omens, and the day carries a warm promise.`
 
+## Screenshot of MVP Weather Oracle
+
+![Screenshot](client/assets/screenshot-of-MVP.png)
+
 ## MVP Scope
 
 - City text input on frontend
@@ -110,6 +114,7 @@ npm test -- --run
 ```
 
 Notes:
+
 - Route tests mock Meteoblue and Gemini calls (no live third-party dependency).
 
 ## Error Handling
@@ -130,6 +135,7 @@ Notes:
 ## Project Status
 
 MVP is functional and aligned to backend-first scope:
+
 - Meteoblue-backed weather retrieval
 - Gemini-powered oracle output
 - Frontend display of core weather metrics + mystical report
