@@ -46,10 +46,7 @@ describe('GET /v1/oracle', () => {
         }),
       })
 
-    vi.stubGlobal(
-      'fetch',
-      fetchMock,
-    )
+    vi.stubGlobal('fetch', fetchMock)
 
     const response = await request(server).get('/v1/oracle?city=Wellington')
 
@@ -82,7 +79,7 @@ describe('GET /v1/oracle', () => {
     })
   })
 
-  it('returns 502 when gemini response is empty', async () => {
+  it('returns fallback oracle when gemini response is empty', async () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce({
@@ -119,9 +116,8 @@ describe('GET /v1/oracle', () => {
 
     const response = await request(server).get('/v1/oracle?city=Wellington')
 
-    expect(response.status).toBe(502)
-    expect(response.body).toEqual({
-      error: 'gemini returned empty response',
-    })
+    expect(response.status).toBe(200)
+    expect(response.body.oracle).toBeDefined()
+    expect(response.body.oracle.trim().length).toBeGreaterThan(0)
   })
 })
