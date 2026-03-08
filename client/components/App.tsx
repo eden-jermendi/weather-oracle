@@ -56,12 +56,15 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [selectedPersonality, setSelectedPersonality] =
     useState<OraclePersonality | null>(null)
+  const [glitterActive, setGlitterActive] = useState(false)
 
   async function handleSearch() {
     if (!city) return
 
+    setGlitterActive(true)
+    setLoading(true)
+
     try {
-      setLoading(true)
       const data = await getOracle(city, selectedPersonality ?? undefined)
 
       if (data) {
@@ -84,13 +87,13 @@ export default function App() {
     } finally {
       setLoading(false)
       setCity('')
+      requestAnimationFrame(() => setGlitterActive(false))
     }
   }
 
   return (
     <div className="page" style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <div className="card">
-      
+      <div className={`card ${glitterActive ? 'card--glitter' : ''}`}>
         <h1>🔮 Weather Oracle</h1>
 
         <input
