@@ -48,7 +48,9 @@ h1 {
   border: 1px solid transparent;
   font-size: 0.85rem;
   padding: 0.45rem 0.65rem;
-  transition: transform 120ms ease, border-color 120ms ease,
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease,
     box-shadow 120ms ease;
 }
 
@@ -57,8 +59,10 @@ h1 {
 }
 
 .personalityButton.selected {
-  border-color: #111326;
-  box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px rgba(17, 19, 38, 0.95);
+  border-color: #414cae;
+  box-shadow:
+    0 0 0 3px #ffffff,
+    0 0 0 6px rgba(47, 62, 199, 0.95);
   transform: translateY(-1px);
 }
 

@@ -102,6 +102,10 @@ export default function App() {
           Ask the Oracle
         </button>
 
+        <div>
+          <p>🧙 Choose a persona: ✨</p>
+        </div>
+
         <div className="personalityButtons" aria-label="Oracle personality">
           {personalityOptions.map((option) => {
             const isSelected = selectedPersonality === option.id
