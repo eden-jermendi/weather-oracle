@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { getOracle, OraclePersonality } from '../apiClient'
 import './style.css'
+import oracleLoadingSound from '../assets/sounds/oracle-loading-sound.mp3'
+import oracleFinishedSound from '../assets/sounds/oracle-finished-sound.mp3'
+import errorSoundEffect from '../assets/sounds/error-sound-effect.mp3'
 
 const personalityOptions: {
   id: OraclePersonality
@@ -56,12 +59,47 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [selectedPersonality, setSelectedPersonality] =
     useState<OraclePersonality | null>(null)
+  const [glitterActive, setGlitterActive] = useState(false)
+  const loadingAudioRef = useRef<HTMLAudioElement | null>(null)
+  const finishedAudioRef = useRef<HTMLAudioElement | null>(null)
+  const errorAudioRef = useRef<HTMLAudioElement | null>(null)
+
+  if (!loadingAudioRef.current) {
+    loadingAudioRef.current = new Audio(oracleLoadingSound)
+    loadingAudioRef.current.preload = 'auto'
+  }
+
+  if (!finishedAudioRef.current) {
+    finishedAudioRef.current = new Audio(oracleFinishedSound)
+    finishedAudioRef.current.preload = 'auto'
+  }
+
+  if (!errorAudioRef.current) {
+    errorAudioRef.current = new Audio(errorSoundEffect)
+    errorAudioRef.current.preload = 'auto'
+  }
 
   async function handleSearch() {
     if (!city) return
 
+    const loadingAudio = loadingAudioRef.current
+    if (loadingAudio) {
+      const loadingLoopEndSeconds = 20
+      loadingAudio.pause()
+      loadingAudio.currentTime = 0
+      loadingAudio.loop = false
+      loadingAudio.ontimeupdate = () => {
+        if (loadingAudio.currentTime >= loadingLoopEndSeconds) {
+          loadingAudio.currentTime = 0
+        }
+      }
+      loadingAudio.play().catch(() => {})
+    }
+
+    setGlitterActive(true)
+    setLoading(true)
+
     try {
-      setLoading(true)
       const data = await getOracle(city, selectedPersonality ?? undefined)
 
       if (data) {
@@ -75,22 +113,42 @@ export default function App() {
         setFeelsLike(null)
         setHumidity(null)
       }
+
+      const finishedAudio = finishedAudioRef.current
+      if (finishedAudio) {
+        finishedAudio.pause()
+        finishedAudio.currentTime = 0
+        finishedAudio.play().catch(() => {})
+      }
     } catch (error) {
       console.error(error)
       setOracle(getReadableError(error))
       setTemp(null)
       setFeelsLike(null)
       setHumidity(null)
+
+      const errorAudio = errorAudioRef.current
+      if (errorAudio) {
+        errorAudio.pause()
+        errorAudio.currentTime = 0
+        errorAudio.play().catch(() => {})
+      }
     } finally {
+      if (loadingAudio) {
+        loadingAudio.pause()
+        loadingAudio.currentTime = 0
+        loadingAudio.ontimeupdate = null
+      }
+
       setLoading(false)
       setCity('')
+      requestAnimationFrame(() => setGlitterActive(false))
     }
   }
 
   return (
     <div className="page" style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <div className="card">
-      
+      <div className={`card ${glitterActive ? 'card--glitter' : ''}`}>
         <h1>🔮 Weather Oracle</h1>
 
         <input

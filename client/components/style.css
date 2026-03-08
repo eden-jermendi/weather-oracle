@@ -3,19 +3,17 @@
   display: grid;
   place-items: center;
 
-  background: linear-gradient(
-    135deg,
-    #74b9ff,
-    #a29bfe,
-    #ffeaa7
-  );
+  background: linear-gradient(135deg, #74b9ff, #a29bfe, #ffeaa7);
 
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .card {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 
   padding: 2rem;
   border-radius: 16px;
@@ -24,10 +22,106 @@
   width: 100%;
 
   box-shadow:
-    0 20px 40px rgba(0,0,0,0.2),
-    inset 0 1px 1px rgba(255,255,255,0.4);
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
 
   text-align: center;
+}
+
+.card--glitter::before,
+.card--glitter::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  pointer-events: none;
+  opacity: 0;
+  animation: glitterTwinkle 840ms ease-in-out infinite;
+}
+
+.card--glitter::before {
+  background:
+    radial-gradient(rgba(255, 255, 255, 0.58) 0 0.9px, transparent 1.5px) 0 0 / 18px 18px,
+    radial-gradient(rgba(255, 247, 208, 0.52) 0 0.8px, transparent 1.4px) 9px 6px / 20px 20px,
+    radial-gradient(rgba(197, 230, 255, 0.5) 0 0.9px, transparent 1.5px) 4px 11px / 22px 22px,
+    radial-gradient(circle at 4% 8%, rgba(255, 255, 255, 0.95) 0 1.2px, transparent 2.6px),
+    radial-gradient(circle at 9% 30%, rgba(255, 246, 188, 0.95) 0 1px, transparent 2.4px),
+    radial-gradient(circle at 16% 72%, rgba(187, 227, 255, 0.92) 0 1.1px, transparent 2.5px),
+    radial-gradient(circle at 23% 18%, rgba(255, 255, 255, 0.95) 0 1.4px, transparent 2.8px),
+    radial-gradient(circle at 31% 85%, rgba(235, 214, 255, 0.9) 0 1.1px, transparent 2.4px),
+    radial-gradient(circle at 37% 9%, rgba(255, 255, 255, 0.95) 0 1.2px, transparent 2.8px),
+    radial-gradient(circle at 46% 74%, rgba(255, 247, 201, 0.9) 0 1.1px, transparent 2.4px),
+    radial-gradient(circle at 54% 21%, rgba(195, 233, 255, 0.9) 0 1.2px, transparent 2.6px),
+    radial-gradient(circle at 62% 89%, rgba(255, 255, 255, 0.95) 0 1.3px, transparent 2.8px),
+    radial-gradient(circle at 71% 14%, rgba(235, 214, 255, 0.9) 0 1.1px, transparent 2.5px),
+    radial-gradient(circle at 78% 67%, rgba(255, 255, 255, 0.95) 0 1.2px, transparent 2.7px),
+    radial-gradient(circle at 86% 29%, rgba(255, 248, 210, 0.9) 0 1px, transparent 2.4px),
+    radial-gradient(circle at 93% 81%, rgba(189, 228, 255, 0.9) 0 1.1px, transparent 2.6px),
+    radial-gradient(circle at 97% 42%, rgba(255, 255, 255, 0.95) 0 1.4px, transparent 2.9px);
+}
+
+.card--glitter::after {
+  background:
+    radial-gradient(rgba(255, 255, 255, 0.5) 0 0.8px, transparent 1.4px) 7px 3px / 19px 19px,
+    radial-gradient(rgba(236, 216, 255, 0.46) 0 0.8px, transparent 1.4px) 13px 9px / 24px 24px,
+    radial-gradient(rgba(198, 234, 255, 0.44) 0 0.8px, transparent 1.5px) 2px 15px / 26px 26px,
+    radial-gradient(circle at 7% 62%, rgba(255, 255, 255, 0.95) 0 1px, transparent 2.4px),
+    radial-gradient(circle at 13% 44%, rgba(255, 249, 222, 0.9) 0 1.1px, transparent 2.5px),
+    radial-gradient(circle at 21% 92%, rgba(194, 233, 255, 0.9) 0 1.2px, transparent 2.6px),
+    radial-gradient(circle at 28% 37%, rgba(255, 255, 255, 0.95) 0 1.3px, transparent 2.7px),
+    radial-gradient(circle at 34% 58%, rgba(236, 216, 255, 0.9) 0 1.1px, transparent 2.5px),
+    radial-gradient(circle at 43% 95%, rgba(255, 255, 255, 0.95) 0 1.2px, transparent 2.6px),
+    radial-gradient(circle at 49% 47%, rgba(255, 247, 204, 0.9) 0 1px, transparent 2.4px),
+    radial-gradient(circle at 58% 6%, rgba(197, 235, 255, 0.9) 0 1.2px, transparent 2.7px),
+    radial-gradient(circle at 66% 52%, rgba(255, 255, 255, 0.95) 0 1.1px, transparent 2.5px),
+    radial-gradient(circle at 74% 86%, rgba(235, 214, 255, 0.9) 0 1.1px, transparent 2.4px),
+    radial-gradient(circle at 82% 49%, rgba(255, 255, 255, 0.95) 0 1.4px, transparent 2.8px),
+    radial-gradient(circle at 89% 10%, rgba(255, 248, 212, 0.9) 0 1px, transparent 2.4px),
+    radial-gradient(circle at 95% 58%, rgba(191, 230, 255, 0.9) 0 1.2px, transparent 2.6px);
+  animation-name: glitterTwinkleSecondary;
+  animation-duration: 970ms;
+}
+
+@keyframes glitterTwinkle {
+  0% {
+    opacity: 0;
+    filter: brightness(0.9);
+  }
+  16% {
+    opacity: 0.95;
+    filter: brightness(1.15);
+  }
+  40% {
+    opacity: 0.55;
+  }
+  62% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    filter: brightness(1);
+  }
+}
+
+@keyframes glitterTwinkleSecondary {
+  0% {
+    opacity: 0;
+    filter: brightness(0.9);
+  }
+  24% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.35;
+  }
+  72% {
+    opacity: 0.82;
+    filter: brightness(1.1);
+  }
+  100% {
+    opacity: 0;
+    filter: brightness(1);
+  }
 }
 
 .card input {
@@ -41,7 +135,7 @@
 .card input:focus {
   outline: none;
   border-color: #7873f5;
-  box-shadow: 0 0 0 2px rgba(120,115,245,0.2);
+  box-shadow: 0 0 0 2px rgba(120, 115, 245, 0.2);
 }
 .card button {
   padding: 10px 18px;
@@ -59,7 +153,7 @@
 
 .card button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 h1 {
   margin-bottom: 20px;
@@ -96,15 +190,15 @@ h1 {
 }
 
 .personalityButton.silverMoon {
-  background-color: #6f8fd6;
+  background: linear-gradient(135deg, #9ec5ff, #6f8fd6 55%, #4d67b7);
 }
 
 .personalityButton.teaLeaf {
-  background-color: #d07bc2;
+  background: linear-gradient(135deg, #b6ce73 12%, #96d05b 56%, #4e9d4e 90%);
 }
 
 .personalityButton.veiledPriestess {
-  background-color: #9c86d8;
+  background: linear-gradient(135deg, #b8a2f2, #8f74d8 52%, #6247b0);
 }
 
 .result {
@@ -115,7 +209,7 @@ h1 {
   margin-top: 18px;
   padding: 14px;
 
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 10px;
 
   font-style: italic;
