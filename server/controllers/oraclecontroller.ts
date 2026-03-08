@@ -1,8 +1,26 @@
 import { Request, Response } from 'express'
-import { buildOraclePrompt } from '../utils/buildOraclePrompt'
+import {
+  buildOraclePrompt,
+  ORACLE_PERSONALITIES,
+  OraclePersonality,
+} from '../utils/buildOraclePrompt'
 
 export async function getOracle(req: Request, res: Response) {
   const city = (req.query.city as string)?.trim()
+  const personalityQuery = (req.query.personality as string | undefined)?.trim()
+
+  let personality: OraclePersonality | undefined
+  if (personalityQuery) {
+    if (
+      ORACLE_PERSONALITIES.includes(personalityQuery as OraclePersonality) ===
+      false
+    ) {
+      return res.status(400).json({
+        error: `personality must be one of: ${ORACLE_PERSONALITIES.join(', ')}`,
+      })
+    }
+    personality = personalityQuery as OraclePersonality
+  }
 
   if (!city) {
     return res.status(400).json({ error: 'city query parameter is required' })
@@ -63,7 +81,7 @@ export async function getOracle(req: Request, res: Response) {
       windSpeed: current?.windspeed ?? 0,
       description: `Pictocode ${current?.pictocode ?? 'unknown'}`,
     }
-    const oraclePrompt = buildOraclePrompt(promptInput)
+    const oraclePrompt = buildOraclePrompt(promptInput, personality)
     const geminiApiKey = process.env.GEMINI_API_KEY
     if (!geminiApiKey) {
       return res.status(500).json({ error: 'GEMINI_API_KEY is not set' })

@@ -1,6 +1,28 @@
 import { useState } from 'react'
-import { getOracle } from '../apiClient'
+import { getOracle, OraclePersonality } from '../apiClient'
 import './style.css'
+
+const personalityOptions: {
+  id: OraclePersonality
+  label: string
+  className: string
+}[] = [
+  {
+    id: 'daughter-of-the-silver-moon',
+    label: 'Daughter of the Silver Moon',
+    className: 'silverMoon',
+  },
+  {
+    id: 'tea-leaf-trickster',
+    label: 'Tea-Leaf Trickster',
+    className: 'teaLeaf',
+  },
+  {
+    id: 'the-veiled-priestess',
+    label: 'The Veiled Priestess',
+    className: 'veiledPriestess',
+  },
+]
 
 function getReadableError(error: unknown): string {
   const err = error as { response?: { body?: { error?: string } } }
@@ -32,13 +54,15 @@ export default function App() {
   const [feelsLike, setFeelsLike] = useState<number | null>(null)
   const [humidity, setHumidity] = useState<number | null>(null)
   const [loading, setLoading] = useState(false)
+  const [selectedPersonality, setSelectedPersonality] =
+    useState<OraclePersonality | null>(null)
 
   async function handleSearch() {
     if (!city) return
 
     try {
       setLoading(true)
-      const data = await getOracle(city) // calling apiclient fn to get oracle data from backend
+      const data = await getOracle(city, selectedPersonality ?? undefined)
 
       if (data) {
         setOracle(data.oracle ?? 'The oracle cannot see this city.')
@@ -77,6 +101,26 @@ export default function App() {
         <button onClick={handleSearch} style={{ marginLeft: '10px' }}>
           Ask the Oracle
         </button>
+
+        <div className="personalityButtons" aria-label="Oracle personality">
+          {personalityOptions.map((option) => {
+            const isSelected = selectedPersonality === option.id
+
+            return (
+              <button
+                key={option.id}
+                type="button"
+                className={`personalityButton ${option.className} ${
+                  isSelected ? 'selected' : ''
+                }`}
+                onClick={() => setSelectedPersonality(option.id)}
+                aria-pressed={isSelected}
+              >
+                {option.label}
+              </button>
+            )
+          })}
+        </div>
 
         {loading && <p>Consulting the skies...</p>}
 

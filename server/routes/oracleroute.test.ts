@@ -120,4 +120,63 @@ describe('GET /v1/oracle', () => {
     expect(response.body.oracle).toBeDefined()
     expect(response.body.oracle.trim().length).toBeGreaterThan(0)
   })
+
+  it('injects selected personality into prompt when personality query is provided', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          results: [{ lat: -41.2865, lon: 174.7762 }],
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          data_1h: {
+            felttemperature: [17.4],
+            relativehumidity: [68],
+          },
+          data_current: {
+            temperature: 18.2,
+            windspeed: 12.4,
+            cloudcover: 60,
+            precipitation: 0.3,
+            pictocode: 3,
+            isdaylight: 1,
+          },
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          candidates: [
+            {
+              content: {
+                parts: [{ text: 'The veil reads the weather plainly.' }],
+              },
+            },
+          ],
+        }),
+      })
+
+    vi.stubGlobal('fetch', fetchMock)
+
+    const response = await request(server).get(
+      '/v1/oracle?city=Wellington&personality=the-veiled-priestess',
+    )
+
+    expect(response.status).toBe(200)
+    expect(response.body.oraclePrompt).toContain('The Veiled Priestess')
+    expect(response.body.oraclePrompt).toContain('Oracle personality:')
+  })
+
+  it('returns 400 for unsupported personality query values', async () => {
+    const response = await request(server).get(
+      '/v1/oracle?city=Wellington&personality=moon-queen',
+    )
+
+    expect(response.status).toBe(400)
+    expect(response.body.error).toContain('personality must be one of:')
+  })
 })
