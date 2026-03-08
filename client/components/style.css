@@ -65,6 +65,48 @@ h1 {
   margin-bottom: 20px;
 }
 
+.personalityButtons {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.personalityButton {
+  border: 1px solid transparent;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.65rem;
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.personalityButton:hover {
+  transform: translateY(-1px);
+}
+
+.personalityButton.selected {
+  border-color: #414cae;
+  box-shadow:
+    0 0 0 3px #ffffff,
+    0 0 0 6px rgba(47, 62, 199, 0.95);
+  transform: translateY(-1px);
+}
+
+.personalityButton.silverMoon {
+  background-color: #6f8fd6;
+}
+
+.personalityButton.teaLeaf {
+  background-color: #d07bc2;
+}
+
+.personalityButton.veiledPriestess {
+  background-color: #9c86d8;
+}
+
 .result {
   margin-top: 20px;
   font-size: 1.2rem;
