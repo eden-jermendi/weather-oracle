@@ -66,6 +66,7 @@ export default function App() {
   return (
     <div className="page" style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
       <div className="card">
+      
         <h1>🔮 Weather Oracle</h1>
 
         <input
@@ -87,7 +88,7 @@ export default function App() {
               <p>🥶 Feels like: {feelsLike.toFixed(1)}°C</p>
             )}
             {humidity !== null && <p>💧 Humidity: {humidity}%</p>}
-            <p>🔮 {oracle}</p>
+            <p className="oracle">🔮 {oracle}</p>
           </div>
         )}
       </div>
